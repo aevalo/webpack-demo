@@ -1,0 +1,25 @@
+@font-face {
+  font-family: 'SimplePrint Regular';
+  src: url('./simple-print_regular.woff') format('woff'),
+    url('./simple-print_regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SimplePrint Bold';
+  src: url('./simple-print_bold.woff') format('woff'),
+    url('./simple-print_bold.ttf') format('ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+.hello {
+  color: red;
+  background: url('./icon.png');
+  font-family: 'SimplePrint Regular';
+}
+
+strong {
+  font-family: 'SimplePrint Bold';
+}
