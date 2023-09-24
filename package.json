@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "check-updates": "npm-check-updates",
-    "build": "webpack --mode=development --config webpack.config.js",
-    "build:production": "webpack --mode=production --config webpack.config.js",
+    "build": "webpack --config webpack.dev.js",
+    "build:prod": "webpack --config webpack.prod.js",
     "watch": "webpack --watch",
     "start": "webpack serve --open",
     "server": "node server.js"
@@ -32,7 +32,12 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-middleware": "^6.1.1",
     "webpack-dev-server": "^4.15.1",
+    "webpack-merge": "^5.9.0",
     "xml-loader": "^1.2.1",
     "yamljs": "^0.3.0"
-  }
+  },
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ]
 }

@@ -6,7 +6,6 @@ const yaml = require('yamljs');
 const json5 = require('json5');
 
 module.exports = {
-  mode: 'development',
   entry: {
     index: {
       import: './src/index.js',
@@ -21,10 +20,6 @@ module.exports = {
       dependOn: 'shared',
     },
     shared: 'lodash'
-  },
-  devtool: 'inline-source-map',
-  devServer: {
-    static: './dist'
   },
   output: {
     filename: '[name].bundle.js',
@@ -71,20 +66,16 @@ module.exports = {
       parser: {
         parse: json5.parse
       }
-    }, {
-      sideEffects: false
-      // If your code did have some side effects though, an array can be provided instead:
-      // sideEffects: ['./src/some-side-effectful-file.js']
     }]
   },
   plugins: [
     new CopyPlugin({
       patterns: [
-        { from: "./static", to: "public" }
+        { from: './static', to: 'public' }
       ]
     }),
     new HtmlWebpackPlugin({
-      title: 'Tree Shaking'
+      title: 'Production'
     })
   ]
 };
