@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import printMe from './print.js';
 import './style.css';
 import Icon from './icon.png';
 import Data from './data.xml';
@@ -20,6 +21,12 @@ function component() {
   const container = document.createElement('div');
 
   const element = document.createElement('div');
+
+  const btn = document.createElement('button');
+  btn.innerHTML = 'Click me and check the console!';
+  btn.onclick = printMe;
+
+  container.appendChild(btn);
 
   // Lodash, now imported by this script
   element.innerHTML = _.join(['Hello', 'webpack'], ' ');
