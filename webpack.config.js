@@ -6,14 +6,23 @@ const yaml = require('yamljs');
 const json5 = require('json5');
 
 module.exports = {
+  mode: 'development',
   entry: {
     index: './src/index.js',
     print: './src/print.js'
   },
+  devtool: 'inline-source-map',
+  devServer: {
+    static: './dist'
+  },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true
+    clean: true,
+    publicPath: '/'
+  },
+  optimization: {
+    runtimeChunk: 'single'
   },
   module: {
     rules: [{
@@ -58,7 +67,7 @@ module.exports = {
       ]
     }),
     new HtmlWebpackPlugin({
-      title: 'Output Management'
+      title: 'Development'
     })
   ]
 };
