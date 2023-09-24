@@ -30,10 +30,12 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
+    // Public path is required for webpack server
     //publicPath: '/'
   },
   optimization: {
-    runtimeChunk: 'single'
+    runtimeChunk: 'single',
+    usedExports: true
   },
   module: {
     rules: [{
@@ -69,6 +71,10 @@ module.exports = {
       parser: {
         parse: json5.parse
       }
+    }, {
+      sideEffects: false
+      // If your code did have some side effects though, an array can be provided instead:
+      // sideEffects: ['./src/some-side-effectful-file.js']
     }]
   },
   plugins: [
@@ -78,7 +84,7 @@ module.exports = {
       ]
     }),
     new HtmlWebpackPlugin({
-      title: 'Code Splitting'
+      title: 'Tree Shaking'
     })
   ]
 };
