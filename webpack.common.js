@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const toml = require('toml');
 const yaml = require('yamljs');
 const json5 = require('json5');
+const webpack = require('webpack');
 
 module.exports = {
   entry: {
@@ -19,7 +20,7 @@ module.exports = {
       import: './src/another-module.js',
       dependOn: 'shared',
     },
-    shared: 'lodash'
+    shared: ['core-js', 'lodash']
   },
   output: {
     filename: '[name].bundle.js',
@@ -66,6 +67,15 @@ module.exports = {
       parser: {
         parse: json5.parse
       }
+    }, {
+      test: /\.m?js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: "babel-loader",
+        options: {
+          presets: ['@babel/preset-env']
+        }
+      }
     }]
   },
   plugins: [
@@ -75,7 +85,10 @@ module.exports = {
       ]
     }),
     new HtmlWebpackPlugin({
-      title: 'Production'
+      title: 'Shimming'
+    }),
+    new webpack.ProvidePlugin({
+        _: 'lodash',
     })
   ]
 };
