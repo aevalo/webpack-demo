@@ -7,31 +7,23 @@ const json5 = require('json5');
 const webpack = require('webpack');
 
 module.exports = {
+  target: 'web',
   entry: {
-    index: {
-      import: './src/index.js',
-      dependOn: 'shared',
-    },
-    print: {
-      import: './src/print.js',
-      dependOn: 'shared',
-    },
-    another: {
-      import: './src/another-module.js',
-      dependOn: 'shared',
-    },
-    shared: ['core-js', 'lodash']
+    index: './src/index.ts'
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist/js'),
     clean: true,
     // Public path is required for webpack server
     //publicPath: '/'
   },
   optimization: {
-    runtimeChunk: 'single',
-    usedExports: true
+    //runtimeChunk: 'single',
+    usedExports: true,
+    splitChunks: {
+      chunks: 'all',
+    }
   },
   module: {
     rules: [{
@@ -68,15 +60,26 @@ module.exports = {
         parse: json5.parse
       }
     }, {
-      test: /\.m?js$/,
+      test: /\.(m?js|tsx?)$/,
       exclude: /node_modules/,
-      use: {
-        loader: "babel-loader",
+      use: [{
+        loader: 'babel-loader',
         options: {
-          presets: ['@babel/preset-env']
-        }
-      }
+          configFile: path.resolve(__dirname, '.babelrc')
+        },
+      }, {
+        loader: 'ts-loader',
+				options: {
+					transpileOnly: true
+				}
+      }]
+    }, {
+        test: /\.d\.ts$/,
+        loader: 'ignore-loader'
     }]
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new CopyPlugin({
@@ -85,10 +88,10 @@ module.exports = {
       ]
     }),
     new HtmlWebpackPlugin({
-      title: 'Shimming'
+      title: 'Typescript'
     }),
     new webpack.ProvidePlugin({
-        _: 'lodash',
+      _: 'lodash',
     })
   ]
 };
